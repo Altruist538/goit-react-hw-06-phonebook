@@ -7,6 +7,9 @@ import {
   StyledError,
   Button,
 } from './ContactForm.styled';
+import { useDispatch } from 'react-redux';
+import { addContacts } from 'redux/contactsSlice';
+
 const validationSchema = Yup.object().shape({
   name: Yup.string().min(2).max(50).required('* Name is required'),
   number: Yup.string()
@@ -14,7 +17,8 @@ const validationSchema = Yup.object().shape({
     .max(16, 'Phone number is too long')
     .required('* Enter phone number'),
 });
-export const ContactForm = ({ onAdd }) => {
+export const ContactForm = () => {
+  const dispatch = useDispatch();
   return (
     <>
       <Formik
@@ -24,7 +28,7 @@ export const ContactForm = ({ onAdd }) => {
         }}
         validationSchema={validationSchema}
         onSubmit={(values, actions) => {
-          onAdd({ ...values, id: nanoid() });
+          dispatch(addContacts({ ...values, id: nanoid() }));
           actions.resetForm();
         }}
       >
