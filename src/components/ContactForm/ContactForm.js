@@ -35,7 +35,9 @@ export const ContactForm = () => {
               contact.number === values.number
           );
           if (isContactExists) {
-            return alert(`${values.name} is already in contacts`);
+            return alert(
+              `${values.name} or ${values.number} is already in contacts`
+            );
           }
           dispatch(addContacts({ ...values, id: nanoid() }));
           actions.resetForm();
